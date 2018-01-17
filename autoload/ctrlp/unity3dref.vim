@@ -61,7 +61,7 @@ func! ctrlp#unity3dref#accept(mode, str)
     let url = matchstr(a:str, '\[\zs[^\]]\+\ze\]')
     let base_url = "https://docs.unity3d.com/Documentation/ScriptReference/"
     let url = base_url . url
-    execute ":OpenBrowser " . url
+    execute ":Gogo " . url
     call ctrlp#exit()
     echo url
 endfunc

@@ -11,8 +11,8 @@ Usage
 Requirements
 ------------
 
-* [CtrlP](https://github.com/kien/ctrlp.vim) for the seach mechanism
-* [open-browser](https://github.com/tyru/open-browser.vim) for launching the browser
+* [CtrlP](https://github.com/kien/ctrlp.vim) for the search mechanism
+* [gogo](https://github.com/idbrii/vim-gogo) for launching the browser
 
 Todo
 ----
