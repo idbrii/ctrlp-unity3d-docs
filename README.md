@@ -1,17 +1,20 @@
-ctrlp-unity3d-docs
-==================
-Search the unity3d docs using ctrlp.vim.
+vim-unityengine-docs
+====================
+Search Unity game engine docs using ctrlp or unite.
+
+Use your favourite incremental search to find documentation pages. Opens the
+pages in a browser.
 
 Usage
 -----
 
-* Use `:CtrlPUnity3DDocs` to launch the search.
+* Use `:CtrlPUnity3DDocs` or `:Unite unitydoc` to launch the search.
 * Hit `<CR>` to view the selected item in browser
 
 Requirements
 ------------
 
-* [CtrlP](https://github.com/kien/ctrlp.vim) for the search mechanism
+* [CtrlP](https://github.com/kien/ctrlp.vim) or [unite](https://github.com/Shougo/unite.vim) for the search mechanism
 * [gogo](https://github.com/idbrii/vim-gogo) for launching the browser
 
 Todo
