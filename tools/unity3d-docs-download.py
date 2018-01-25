@@ -8,29 +8,25 @@ import os.path
 # Instead, the types are loaded into the tree dynamically via javascript. So
 # this script no longer works.
 #
-# May have to do something in C# instead:
-#   List<Type> types = GetAllTypesInAssembly(new string[] { "Unity", });
-#   public static List<Type> GetAllTypesInAssembly(string[] pAssemblyNames)
+# May have to do something in C# from inside Unity instead:
+#   using System.Linq;
+#   string nspace = "Unity";
+#   var assemblies = System.AppDomain.CurrentDomain.GetAssemblies().ToList();
+#   assemblies.Add(System.Reflection.Assembly.GetExecutingAssembly());
+#   var types = new System.Collections.Generic.List<string>();
+#   foreach (var assembly in assemblies)
 #   {
-#      List<Type> results = new List<Type>();
-#      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
-#      {
-#        foreach (string assemblyName in pAssemblyNames)
-#        {
-#          if (assembly.FullName.StartsWith(assemblyName))
-#          {
-#            foreach (Type type in assembly.GetTypes())
-#            {
-#              results.Add(type);
-#            }
-#            break;
-#          }
-#        }
-#      }
-#      return results;
+#       var q = from t in assembly.GetTypes()
+#           where t.IsClass && !string.IsNullOrEmpty(t.Namespace) && t.Namespace.StartsWith(nspace)
+#           select t;
+#       q.ToList().ForEach(t => types.Add(t.Namespace +"."+ t.Name));
 #   }
+#   Debug.Log("LIST OF TYPES:\n"+ string.Join("\n", types.ToArray()) +"\nLIST OF TYPES\n", this);
 #
-# Source: https://forum.unity.com/threads/geting-a-array-or-list-of-all-unity-types.416976/#post-2716680
+# This above solution is incomplete. It doesn't load enough assemblies to get
+# the right types (Mathf is missing). It loaded 3500 types for me but
+# unity-type-index has 10000.
+#
 BASE_URL = r"http://docs.unity3d.com/Documentation/ScriptReference/"
 OUT = os.path.join(
     os.path.dirname(__file__), "..", "data", "unity-type-index.txt"
