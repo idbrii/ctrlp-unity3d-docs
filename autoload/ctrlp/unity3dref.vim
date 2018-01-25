@@ -27,12 +27,13 @@ call add(g:ctrlp_ext_vars, {
   \ })
 
 let s:type_list = []
+let s:type_index_file = expand("<sfile>:p:h") . "/type-index.txt"
+let s:type_index_file = resolve(s:type_index_file)
 
 python << EOP
 import vim
 # obtain the type list
-path_to_script = vim.eval('expand("<sfile>")')
-path_to_types = path_to_script.replace('unity3dref.vim', 'type-index.txt')
+path_to_types = vim.eval('s:type_index_file')
 with open(path_to_types) as f:
     types = [l.strip() for l in f.readlines()]
 
