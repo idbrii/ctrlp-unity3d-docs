@@ -4,6 +4,33 @@ import urllib
 import re
 import os.path
 
+# TODO: The unity ScriptReference page no longer contains a list of all types.
+# Instead, the types are loaded into the tree dynamically via javascript. So
+# this script no longer works.
+#
+# May have to do something in C# instead:
+#   List<Type> types = GetAllTypesInAssembly(new string[] { "Unity", });
+#   public static List<Type> GetAllTypesInAssembly(string[] pAssemblyNames)
+#   {
+#      List<Type> results = new List<Type>();
+#      foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+#      {
+#        foreach (string assemblyName in pAssemblyNames)
+#        {
+#          if (assembly.FullName.StartsWith(assemblyName))
+#          {
+#            foreach (Type type in assembly.GetTypes())
+#            {
+#              results.Add(type);
+#            }
+#            break;
+#          }
+#        }
+#      }
+#      return results;
+#   }
+#
+# Source: https://forum.unity.com/threads/geting-a-array-or-list-of-all-unity-types.416976/#post-2716680
 BASE_URL = r"http://docs.unity3d.com/Documentation/ScriptReference/"
 OUT = os.path.join(
     os.path.dirname(__file__), "..", "data", "unity-type-index.txt"
