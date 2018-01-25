@@ -27,7 +27,7 @@ call add(g:ctrlp_ext_vars, {
   \ })
 
 let s:type_list = []
-let s:type_index_file = expand("<sfile>:p:h") . "/type-index.txt"
+let s:type_index_file = expand("<sfile>:p:h:h:h") . "/data/unity-type-index.txt"
 let s:type_index_file = resolve(s:type_index_file)
 
 python << EOP

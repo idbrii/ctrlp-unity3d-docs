@@ -21,7 +21,7 @@
 "     THE SOFTWARE.
 " }}}
 
-let s:type_index_file = expand("<sfile>:p") . "/../../../ctrlp/type-index.txt"
+let s:type_index_file = expand("<sfile>:p:h:h:h:h") . "/data/unity-type-index.txt"
 let s:type_index_file = resolve(s:type_index_file)
 
 " define source

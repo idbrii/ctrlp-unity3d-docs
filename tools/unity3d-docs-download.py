@@ -6,7 +6,7 @@ import os.path
 
 BASE_URL = r"http://docs.unity3d.com/Documentation/ScriptReference/"
 OUT = os.path.join(
-    os.path.dirname(__file__), "..", "autoload", "ctrlp", "type-index.txt"
+    os.path.dirname(__file__), "..", "data", "unity-type-index.txt"
     )
 TEMP = OUT + "~"
 
