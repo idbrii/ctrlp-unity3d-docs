@@ -46,7 +46,6 @@ let s:source = {
 \   'default_action': {'common': 'execute'}
 \}
 function! s:source.gather_candidates(args, context)
-    let g:DAVID_test = 'hi'
     let should_refresh = a:context.is_redraw
     let lang_filter = []
     for arg in a:args
@@ -85,7 +84,11 @@ let s:action_table.execute = {
 \   'description': 'lookup unity docs'
 \}
 function! s:action_table.execute.func(candidate)
-    let url = matchstr(a:candidate.action__page, '\[\zs[^\]]\+\ze\]')
+    if exists('a:candidate.action__query')
+        let url = "30_search.html?q=". a:candidate.action__query
+    else
+        let url = matchstr(a:candidate.action__page, '\[\zs[^\]]\+\ze\]')
+    endif
     let base_url = "https://docs.unity3d.com/Documentation/ScriptReference/"
     let url = base_url . url
     execute ":Gogo " . url
@@ -99,4 +102,17 @@ function! s:action_table.tabopen.func(candidate)
 endfunction
 
 let s:source.action_table.common = s:action_table
+
+function! s:source.change_candidates(args, context) abort "{{{
+    " Always include a search option so unindexed items can be easily found.
+    let word = a:context.input
+    let dict = {
+          \ 'word' : word,
+          \ 'kind' : 'common',
+          \ 'source' : 'unitydoc',
+          \ 'action__query' : word,
+          \}
+    let dict.abbr = '[search] ' . word
+    return [dict]
+endf
 
