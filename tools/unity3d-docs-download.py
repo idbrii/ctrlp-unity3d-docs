@@ -1,7 +1,26 @@
 # Download Unity3D docs
-from HTMLParser import HTMLParser
-import urllib
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+# from __future__ import unicode_literals
+
+try:
+    from html.parser import HTMLParser
+except ImportError:
+    # python 2
+    from HTMLParser import HTMLParser
+
+try:
+    import urllib.request, urllib.parse, urllib.error
+except ImportError:
+    import urllib as urllib_py2
+    class urllib:
+        request = urllib_py2
+        parse = urllib_py2
+        error = urllib_py2
+
 import re
+import os
 import os.path
 
 # TODO: The unity ScriptReference page no longer contains a list of all types.
@@ -147,25 +166,33 @@ def get_line_for_type_name(type_name):
 
 # Main functions ===============================================================
 def download_type_list(url):
-    response = urllib.urlopen(url)
+    response = urllib.request.urlopen(url)
     html = response.read()
+    # This part probably doesn't work! It most likely no longer
+    # includes the whole index.
+    #print(html)
     parser = TypesParser()
     parser.feed(html)
     return parser.types
 
 def download_type_info(base_url, type_name):
     url = base_url + "/" + type_name + ".html"
-    response = urllib.urlopen(url)
+    response = urllib.request.urlopen(url)
     html = response.read()
     parser = TypeInfoParser()
     parser.feed(html)
     return parser.field_names
+
+def touch(fname, times=None):
+    with open(fname, 'a'):
+        os.utime(fname, times)
 
 def make():
     # Download type list from server
     remote_type_list = download_type_list(BASE_URL)
 
     # Read existing types
+    touch(TEMP)
     handle = open(TEMP, "r")
     lines = handle.readlines()
     handle.close()
