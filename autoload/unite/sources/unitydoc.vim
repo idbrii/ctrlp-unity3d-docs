@@ -70,8 +70,8 @@ function! s:source.gather_candidates(args, context)
 endfunction
 
 function! unite#sources#unitydoc#load_cache_from(type_index_file)
-    python import unitydoc
-    python unitydoc.load_cache()
+    pythonx import unitydoc
+    pythonx unitydoc.load_cache()
 endf
 function! unite#sources#unitydoc#set_cache(cache)
     let s:cache = a:cache
